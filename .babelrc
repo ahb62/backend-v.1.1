@@ -1,0 +1,4 @@
+{
+    "presets": ["@babel/preset-env"]
+    // Here, we use babel for apply the ES6 Syntax 
+}

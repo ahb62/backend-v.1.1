@@ -1,5 +1,6 @@
 
 import  jwt  from "jsonwebtoken";
+import { serialize } from "cookie";
 import  {UserModel}  from "../../models/users.model.js";
 
 
@@ -23,7 +24,14 @@ import  {UserModel}  from "../../models/users.model.js";
         });
         //Sending the token in the response
         res.status(201).header("Authorization", `Bearer ${token}`).send();
-
+        const serialized = serialize("token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV !== "development",
+          sameSite: "strict",
+          maxAge: 30 * 30 * 12,
+          path: "/",
+        });
+        res.setHeader("Set-Cookie", token);
           
         } catch (error) {
           return res.status(500).json({ message: "Internal server error" });

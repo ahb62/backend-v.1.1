@@ -1,5 +1,4 @@
 import {Sequelize} from 'sequelize';
-export const sequelize = new Sequelize("postgres://default:moR5AQfMxTL6@ep-divine-tree-15188742.us-east-1.postgres.vercel-storage.com:5432/verceldb");
 
 // async function Connecting() {
 //     try{
@@ -29,6 +28,12 @@ const sequelizeOptions = {
   username: DB_USER,
   password: DB_PASSWORD,
   database: DB_NAME,
+  ssl: true,
+    dialectOptions: {
+       ssl: {
+          "require": true
+       }
+     }
 };
 
 export const sequelize = new Sequelize(sequelizeOptions);

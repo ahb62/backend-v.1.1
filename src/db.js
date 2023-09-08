@@ -1,6 +1,6 @@
 import {Sequelize} from 'sequelize';
 
-export const sequelize = new Sequelize('postgresql://postgres:mVpCf7vP1wHCONk8FmA2@containers-us-west-138.railway.app:7880/railway');
+export const sequelize = new Sequelize("postgres://default:moR5AQfMxTL6@ep-divine-tree-15188742.us-east-1.postgres.vercel-storage.com:5432/verceldb");
 
 async function Connecting() {
     try{

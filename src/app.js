@@ -29,6 +29,11 @@ app.use('/auth', auth_routes);
 import { users_routes } from './routes/users/users.route.js';
 app.use('/users', users_routes);
 
+// Importing the calendar routes for his use
+import { calendar_router } from './routes/calendar/calendar.route.js';
+app.use('/calendar', calendar_router);
+
+
 // Setting the swagger description
 const swaggerDefinition = {
     openapi: '3.0.0',

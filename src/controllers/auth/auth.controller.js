@@ -1,7 +1,10 @@
 
+
+    
 import  jwt  from "jsonwebtoken";
-import { serialize } from "cookie";
+import { serialize, } from "cookie";
 import  {UserModel}  from "../../models/users.model.js";
+import {InvalidatedToken} from '../../models/invalidatedTokens.model.js';
 
 
     export const authSignUp = async (req, res) => {
@@ -23,7 +26,6 @@ import  {UserModel}  from "../../models/users.model.js";
             expiresIn: 30 * 30 * 12,
         });
         //Sending the token in the response
-        res.status(201).header("Authorization", `Bearer ${token}`).send();
         const serialized = serialize("token", token, {
           httpOnly: true,
           secure: process.env.NODE_ENV !== "development",
@@ -31,9 +33,11 @@ import  {UserModel}  from "../../models/users.model.js";
           maxAge: 30 * 30 * 12,
           path: "/",
         });
-        res.setHeader("Set-Cookie", token);
-          
-        } catch (error) {
+        
+        res.setHeader("cookie", [serialized]);
+        res.setHeader("Authorization", `Bearer ${token}`)
+        res.status(201).json({ message: "user created" })
+      } catch (error) {
           return res.status(500).json({ message: "Internal server error" });
         }
       };
@@ -62,7 +66,16 @@ import  {UserModel}  from "../../models/users.model.js";
                                 // If the password matches, send a token
                                 const token = jwt.sign({id: validatingUser._id}, "node-express-crud", {
                                 expiresIn: 30 * 30 * 12, });
-                                return res.status(200).json({token});
+                                const serialized = serialize("token", token, {
+                                  httpOnly: true,
+                                  secure: process.env.NODE_ENV !== "development",
+                                  sameSite: "strict",
+                                  maxAge: 1 * 30 * 1,
+                                  path: "/",
+                                });
+                                res.setHeader("cookie", [serialized]);
+                                res.setHeader("Authorization", `Bearer ${token}`)
+                                return res.status(201).json({message: "user logged in"});
                             }
             }
 
@@ -73,3 +86,4 @@ import  {UserModel}  from "../../models/users.model.js";
         }
 
     }
+

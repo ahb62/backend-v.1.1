@@ -44,3 +44,6 @@ export const UserModel = sequelize.define('users', {
     UserModel.comparePassword = async (password, receivedPassword) => {
         return await bcrypt.compare(password, receivedPassword);
     };
+
+
+    // Relación entre Usuario y Permisos

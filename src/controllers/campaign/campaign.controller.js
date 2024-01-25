@@ -1,6 +1,6 @@
 // campaignController.js
 import { CampaignModel } from "../../models/campaign.model.js";
-
+import { OrganizationModel } from "../../models/organization.model.js";
 // Obtener todas las campañas
 export const getCampaigns = async (req, res) => {
     try {
@@ -11,17 +11,35 @@ export const getCampaigns = async (req, res) => {
     }
 };
 
-// Crear una nueva campaña
 export const createCampaign = async (req, res) => {
     try {
-        const { id_campaign, name } = req.body;
+        const { id_campaign, name, organizationId } = req.body;
+
+        // Verificar si se proporcionó el ID de la organización
+        if (!organizationId) {
+            return res.status(400).json({ error: "Se requiere proporcionar el ID de la organización." });
+        }
+
+        // Obtener la organización por su ID
+        const organization = await OrganizationModel.findByPk(organizationId);
+
+        // Verificar si la organización existe
+        if (!organization) {
+            return res.status(404).json({ error: "Organización no encontrada para asociar la campaña." });
+        }
+
+        // Crear la campaña
         const campaign = await CampaignModel.create({ id_campaign, name });
+
+        // Asociar la campaña a la organización
+        await organization.addCampaign(campaign);
 
         res.status(201).json(campaign);
     } catch (error) {
         res.status(500).json({ error: "Error al crear la campaña" });
     }
 };
+
 
 // Obtener una campaña por ID
 export const getCampaignById = async (req, res) => {

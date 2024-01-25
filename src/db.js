@@ -15,10 +15,11 @@ import { Sequelize } from "sequelize";
 // export default Connecting;
 // Variables para almacenar los datos de la base de datos
 const DB_USER = "default";
-const DB_PASSWORD = "W6VK9pSwsDOC";
-const DB_HOST = "ep-royal-darkness-05712244-pooler.us-east-1.postgres.vercel-storage.com"
+const DB_PASSWORD = "7O6ZaBQVcUAT";
+const DB_HOST = "ep-icy-thunder-37500617-pooler.us-east-1.postgres.vercel-storage.com"
 const DB_PORT = 5432;
 const DB_NAME = "verceldb";
+
 
 
 

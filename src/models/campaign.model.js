@@ -1,7 +1,8 @@
 // campaign.model.js
 import { DataTypes } from "sequelize";
 import { sequelize } from "../db.js";
-import { OrganizationModel } from "./organization.model.js";
+
+
 export const CampaignModel = sequelize.define('campaigns', {
     id: {
         type: DataTypes.INTEGER,
@@ -18,4 +19,5 @@ export const CampaignModel = sequelize.define('campaigns', {
         allowNull: false
     }
 });
+
 

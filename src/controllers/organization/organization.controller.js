@@ -6,7 +6,15 @@ import { UserModel } from "../../models/users.model.js";
 export const getOrganizations = async (req, res) => {
     try {
         console.log("Antes de la consulta a la base de datos");
-        const organizations = await OrganizationModel.findAll({include: 'campaigns'});
+        const organizations = await OrganizationModel.findAll(
+            {
+                include: [
+                    {
+                        model: CampaignModel,
+                        as: 'campaigns',
+                    }]
+            }
+        );
         console.log("Después de la consulta a la base de datos");
 
         if (organizations.length === 0) {
